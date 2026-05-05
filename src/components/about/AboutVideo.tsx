@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
-import AboutVideoOne from "../../../public/Images/about_video_image_1.webp";
+import AboutVideoOne from "../../../public/images/about_video_image_1.webp";
 
 export default function AboutVideo() {
   return (
