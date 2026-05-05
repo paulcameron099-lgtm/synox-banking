@@ -9,7 +9,9 @@ export default function HomeLayout({
   return (
     <>
       <Header />
-      {children}
+      <div className="bg-white text-gray-900 dark:bg-white dark:text-gray-900">
+        {children}
+      </div>
       <Footer />
     </>
   );
