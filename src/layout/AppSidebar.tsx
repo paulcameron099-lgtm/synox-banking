@@ -74,18 +74,18 @@ const navItems: NavItem[] = [
     path: "/dashboard/beneficiaries",
     roles: ["user"],
   },
-  {
-    icon: <PiHandWithdrawLight size={24} />,
-    name: "Withdrawals",
-    path: "/dashboard/withdrawals",
-    roles: ["user"],
-  },
-  {
-    icon: <PiHandWithdrawLight size={24} />,
-    name: "Withdrawals",
-    path: "/dashboard/withdrawal-requests",
-    roles: ["admin", "super_admin"],
-  },
+  // {
+  //   icon: <PiHandWithdrawLight size={24} />,
+  //   name: "Withdrawals",
+  //   path: "/dashboard/withdrawals",
+  //   roles: ["user"],
+  // },
+  // {
+  //   icon: <PiHandWithdrawLight size={24} />,
+  //   name: "Withdrawals",
+  //   path: "/dashboard/withdrawal-requests",
+  //   roles: ["admin", "super_admin"],
+  // },
   {
     icon: <MdOutlineSettings size={25} />,
     name: "Settings",
