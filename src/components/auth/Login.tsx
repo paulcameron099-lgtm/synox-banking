@@ -234,7 +234,7 @@ if (isAdmin) {
       <div className="absolute inset-0 bg-linear-to-br from-zinc-900/75 via-zinc-900/45 to-zinc-900/70" />
 
       <img
-        src="/images/auth/banking-login.jpg"
+        src="/images/login-image.webp"
         alt="Secure online banking"
         className="h-full w-full object-cover"
       />

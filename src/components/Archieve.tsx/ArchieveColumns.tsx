@@ -87,12 +87,13 @@ export default function ArchieveColumns() {
           {/* Card image + button stacked on top */}
           <div className="relative flex flex-col items-center py-5">
             {/* Card image */}
-            <Image
+           <Image
               src="/images/transactions_card_image.webp"
-              width={20}
-              height={20}
-              alt="arch_image"
-              className="xl:w-[300px] lg:w-[250px] md:w-[700px] w-[550px] h-auto rounded-xl shadow-lg"
+              width={700}
+              height={450}
+              alt="Transaction card preview"
+              className="h-auto w-full max-w-[550px] rounded-xl shadow-lg md:max-w-[700px] lg:max-w-[250px] xl:max-w-[300px]"
+              priority
             />
 
             {/* Button */}

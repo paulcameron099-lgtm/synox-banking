@@ -514,7 +514,7 @@ export default function Register() {
       <div className="absolute inset-0 bg-linear-to-br from-zinc-900/75 via-zinc-900/40 to-zinc-900/70" />
 
       <img
-        src="/images/auth/banking-login.jpg"
+        src="/images/reg-image.avif"
         alt="Digital banking registration"
         className="h-full w-full object-cover"
       />

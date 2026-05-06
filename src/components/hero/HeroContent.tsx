@@ -1,6 +1,7 @@
 'use client'
 import { motion } from "framer-motion";
 import Star from '../star/Star';
+import Link from "next/link";
 
 export default function HeroContent() {
   return (
@@ -51,22 +52,24 @@ export default function HeroContent() {
       <div className="flex md:flex-row flex-col md:justify-center lg:justify-start items-center gap-6 lg:mt-14 mt-10 w-full">
         {/* Button Wrapper */}
         <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{
-            delay: 0.2,
-            type: "spring",
-            stiffness: 60,
-            duration: 1.4,
-          }}
-          viewport={{ once: true }}
-          className="bg-[#d9ff43] xl:px-10 lg:px-2 px-3 py-5 rounded-lg"
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          delay: 0.2,
+          type: "spring",
+          stiffness: 60,
+          duration: 1.4,
+        }}
+        viewport={{ once: true }}
+        className="bg-[#d9ff43] xl:px-10 lg:px-2 px-3 py-5 rounded-lg"
+      >
+        <Link
+          href="/register"
+          className="text-black font-Euclid font-bold xl:text-[20px] lg:text-[15px]"
         >
-          <button className="text-black font-Euclid font-bold xl:text-[20px] lg:text-[15px]">
-            Get Started Free Now
-          </button>
-        </motion.div>
-
+          <span>Get Started Free Now</span>
+        </Link>
+      </motion.div>
         {/* Review Section */}
         <Star />
       </div>
