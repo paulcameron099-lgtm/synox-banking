@@ -43,11 +43,13 @@ export default async function AdminDashboardPage() {
       .order("created_at", { ascending: false })
   : { data: [] };
 
-  const { data: account } = await supabase
+  const { data: accounts } = await supabase
     .from("accounts")
-    .select("account_name, account_number, currency, balance")
+    .select(
+  "account_name, account_type, account_number, routing_number, currency, balance, status"
+)
     .eq("user_id", user.id)
-    .single();
+    .order("created_at", { ascending: true });
 
     const { data: transactions } = await supabase
       .from("ledger_entries")
@@ -143,37 +145,87 @@ export default async function AdminDashboardPage() {
   </div>
 )}
 
-  <div className="grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
-    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        Available Balance
-      </p>
+ <div className="space-y-6">
+  {accounts && accounts.length > 0 ? (
+    accounts.map((account) => (
+      <div key={account.account_number} className="grid gap-4 lg:grid-cols-2">
+        {/* Balance Card */}
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                {account.account_name || "Synox Checking Account"}
+              </p>
 
-      <h2 className="mt-3 wrap-break-word text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
-        {formatUSD(account?.balance || 0)}
-      </h2>
+              <p className="mt-5 text-sm text-gray-500 dark:text-gray-400">
+                Available Balance
+              </p>
+
+              <h2 className="mt-2 wrap-break-word text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
+                {formatUSD(account.balance || 0)}
+              </h2>
+            </div>
+
+            <span
+              className={`rounded-full px-3 py-1 text-xs font-semibold capitalize ${
+                account.status === "active"
+                  ? "bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-400"
+                  : "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400"
+              }`}
+            >
+              {account.status || "active"}
+            </span>
+          </div>
+        </div>
+
+        {/* Account Details Card */}
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
+          <p className="text-sm font-semibold text-gray-900 dark:text-white">
+            Account Details
+          </p>
+
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            <div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Account Number
+              </p>
+
+              <p className="mt-2 break-all text-lg font-bold text-gray-900 dark:text-white">
+                {account.account_number || "Not available"}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Routing Number
+              </p>
+
+              <p className="mt-2 break-all text-lg font-bold text-gray-900 dark:text-white">
+                {account.routing_number || "026009593"}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-xl bg-gray-50 p-4 dark:bg-gray-950">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              Account Type
+            </p>
+
+            <p className="mt-1 text-sm font-semibold capitalize text-gray-900 dark:text-white">
+              {account.account_type === "savings"
+                ? "Savings Account"
+                : "Checking Account"}
+            </p>
+          </div>
+        </div>
+      </div>
+    ))
+  ) : (
+    <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-8 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400">
+      No accounts found.
     </div>
-
-    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        Account Number
-      </p>
-
-      <h2 className="mt-3 wrap-break-word text-xl font-bold text-gray-900 dark:text-white sm:text-2xl">
-        {account?.account_number || "Not available"}
-      </h2>
-    </div>
-
-    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6 md:col-span-2 xl:col-span-1">
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        Account Type
-      </p>
-
-      <h2 className="mt-3 wrap-break-word text-xl font-bold text-gray-900 dark:text-white sm:text-2xl">
-        {account?.account_name || "Synox Bank"}
-      </h2>
-    </div>
-  </div>
+  )}
+</div>
 
   <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
     <h2 className="text-lg font-bold text-gray-900 dark:text-white sm:text-xl">

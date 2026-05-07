@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+
 
 const inputClass =
   "w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600";
@@ -44,6 +47,36 @@ export default function Register() {
   const [showPostSignupActions, setShowPostSignupActions] = useState(false);
 
   const [signupEmail, setSignupEmail] = useState("");
+
+  const searchParams = useSearchParams();
+  const applicationId = searchParams.get("applicationId");
+
+  useEffect(() => {
+  const fetchApplication = async () => {
+    if (!applicationId) {
+      setErrorMsg("Missing approved application ID.");
+      return;
+    }
+
+    const res = await fetch(
+      `/api/account-applications/get-approved?applicationId=${applicationId}`,
+      { cache: "no-store" }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setErrorMsg(data?.error || "Unable to load approved application.");
+      return;
+    }
+
+    setFullName(`${data.application.first_name} ${data.application.last_name}`);
+    setEmail(data.application.email);
+    setPhone(data.application.phone || "");
+  };
+
+  fetchApplication();
+}, [applicationId]);
 
   const phoneError = useMemo(() => {
     if (!phone) return "";
@@ -266,56 +299,14 @@ export default function Register() {
         )}
 
         <form onSubmit={handleSignUp} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1 text-[#374151]">
-              Full Name
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your Full name"
-              className={inputClass}
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-              disabled={loading || resendLoading}
-            />
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1 text-[#374151]">
-              Email
-            </label>
-            <input
-              type="email"
-              placeholder="enter your email"
-              className={inputClass}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={loading || resendLoading}
-            />
-          </div>
+          <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700">
+          <p className="font-semibold text-gray-900">Approved Application</p>
+          <p className="mt-1">{fullName || "Loading applicant..."}</p>
+          <p className="mt-1">{email || "Loading email..."}</p>
+          {phone && <p className="mt-1">{phone}</p>}
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1 text-[#374151]">
-              Phone number (11 digits)
-            </label>
-            <input
-              type="tel"
-              inputMode="numeric"
-              placeholder="Enter your Phone number"
-              className={inputClass}
-              value={phone}
-              onChange={(e) =>
-                setPhone(e.target.value.replace(/\D/g, "").slice(0, 11))
-              }
-              required
-              disabled={loading || resendLoading}
-            />
-            {phoneError && (
-              <p className="mt-1 text-sm text-red-600">{phoneError}</p>
-            )}
-          </div>
           <div>
               <label className="block text-sm font-medium mb-1 text-[#374151]">
                 Profession

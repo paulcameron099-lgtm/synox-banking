@@ -74,6 +74,13 @@ const navItems: NavItem[] = [
     path: "/dashboard/beneficiaries",
     roles: ["user"],
   },
+
+    {
+    icon: <GiBank size={22} />,
+    name: "Account Applications",
+    path: "/dashboard/account-applications",
+    roles: ["admin", "super_admin"],
+  },
   // {
   //   icon: <PiHandWithdrawLight size={24} />,
   //   name: "Withdrawals",

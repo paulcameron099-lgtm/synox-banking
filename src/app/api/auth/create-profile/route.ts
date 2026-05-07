@@ -43,26 +43,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. Create default wallet account
-    const accountNumber = "30" + Math.floor(1000000000 + Math.random() * 9000000000); // simple mock
-
-    const { error: accountError } = await supabaseAdmin
-      .from("accounts")
-      .insert({
-        user_id: userId,
-        account_name: "Synox Wallet",
-        account_type: "wallet",
-        account_number: accountNumber,
-        currency: "USD",
-        balance: 0,
-      });
-
-    if (accountError) {
-      return NextResponse.json(
-        { error: accountError.message },
-        { status: 500 }
-      );
-    }
 
     return NextResponse.json({ success: true });
   } catch (err: any) {

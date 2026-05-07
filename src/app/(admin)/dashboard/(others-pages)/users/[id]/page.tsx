@@ -54,11 +54,11 @@ export default async function AdminUserDetailsPage({
     notFound();
   }
 
-  const { data: account } = await supabase
-    .from("accounts")
-    .select("account_name, account_number, currency, balance, status")
-    .eq("user_id", id)
-    .single();
+  const { data: accounts } = await supabase
+  .from("accounts")
+  .select("account_name, account_type, account_number, currency, balance, status")
+  .eq("user_id", id)
+  .order("created_at", { ascending: true });
 
   const { data: kyc } = await supabase
     .from("kyc_verifications")
@@ -195,16 +195,59 @@ export default async function AdminUserDetailsPage({
 
         <div className="space-y-6">
           <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Available Balance
-            </p>
-            <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
-              {formatUSD(account?.balance || 0)}
-            </h2>
-            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-              Account: {account?.account_number || "Not available"}
-            </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            User Accounts
+          </p>
+
+          <div className="mt-4 space-y-4">
+            {accounts && accounts.length > 0 ? (
+              accounts.map((item) => (
+                <div
+                  key={item.account_number}
+                  className="rounded-xl border border-gray-200 p-4 dark:border-gray-800"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {item.account_name || "Synox Account"}
+                      </p>
+
+                      <p className="mt-1 text-xs capitalize text-gray-500 dark:text-gray-400">
+                        {item.account_type || "wallet"} account
+                      </p>
+                    </div>
+
+                    <span
+                      className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${
+                        item.status === "active"
+                          ? "bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-400"
+                          : "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400"
+                      }`}
+                    >
+                      {item.status || "active"}
+                    </span>
+                  </div>
+
+                  <h2 className="mt-4 text-2xl font-bold text-gray-900 dark:text-white">
+                    {formatUSD(item.balance || 0)}
+                  </h2>
+
+                  <p className="mt-2 break-all text-xs text-gray-500 dark:text-gray-400">
+                    Account: {item.account_number || "Not available"}
+                  </p>
+
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Currency: {item.currency || "USD"}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                No accounts found.
+              </p>
+            )}
           </div>
+        </div>
 
           <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
           <p className="text-sm text-gray-500 dark:text-gray-400">

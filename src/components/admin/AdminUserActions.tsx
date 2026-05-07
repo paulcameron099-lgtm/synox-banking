@@ -129,7 +129,7 @@ export default function AdminUserActions({
   }
 
   setMessage("User deleted successfully.");
-  router.replace("/admin/users");
+  router.replace("/dashboard/users");
   router.refresh();
 };
 

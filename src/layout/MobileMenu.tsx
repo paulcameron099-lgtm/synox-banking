@@ -14,8 +14,8 @@ interface Menu {
 
 const mobileMenus: Menu[] = [
   { id: "/", label: "Home" },
-  { id: "#about", label: "About Us" },
-  { id: "#service", label: "Services" },
+  { id: "/checking", label: "Checking" },
+  { id: "/savings", label: "Savings" },
   { id: "/contact", label: "Contact" },
 
 ];

@@ -1,10 +1,17 @@
-import React from 'react'
-import Register from '@/components/auth/Register'
+import Register from "@/components/auth/Register";
+import { Suspense } from "react";
+// import RegisterForm from "./RegisterForm";
 
 export default function page() {
   return (
-    <div>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading registration...
+        </div>
+      }
+    >
       <Register />
-    </div>
-  )
+    </Suspense>
+  );
 }

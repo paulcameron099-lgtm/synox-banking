@@ -1,9 +1,12 @@
 'use client'
 import { motion } from "framer-motion";
 import Star from '../star/Star';
+import { useState } from "react";
 import Link from "next/link";
 
 export default function HeroContent() {
+  const [openAccountMenu, setOpenAccountMenu] = useState(false);
+
   return (
     <div className="relative z-10 flex flex-col lg:justify-start md:justify-center lg:items-start items-center gap-4 md:px-20 md:py-60 py-40 lg:w-1/2 md:w-full">
       <motion.h1
@@ -51,25 +54,46 @@ export default function HeroContent() {
       </motion.p>
       <div className="flex md:flex-row flex-col md:justify-center lg:justify-start items-center gap-6 lg:mt-14 mt-10 w-full">
         {/* Button Wrapper */}
+       <div className="relative">
         <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{
-          delay: 0.2,
-          type: "spring",
-          stiffness: 60,
-          duration: 1.4,
-        }}
-        viewport={{ once: true }}
-        className="bg-[#d9ff43] xl:px-10 lg:px-2 px-3 py-5 rounded-lg"
-      >
-        <Link
-          href="/register"
-          className="text-black font-Euclid font-bold xl:text-[20px] lg:text-[15px]"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            delay: 0.2,
+            type: "spring",
+            stiffness: 60,
+            duration: 1.4,
+          }}
+          viewport={{ once: true }}
+          className="bg-[#d9ff43] xl:px-10 lg:px-4 px-5 py-5 rounded-lg"
         >
-          <span>Get Started Free Now</span>
-        </Link>
-      </motion.div>
+          <button
+            type="button"
+            onClick={() => setOpenAccountMenu((prev) => !prev)}
+            className="text-black font-Euclid font-bold xl:text-[20px] lg:text-[15px]"
+          >
+            Get Started Free Now
+          </button>
+        </motion.div>
+
+        {openAccountMenu && (
+          <div className="absolute left-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+            <Link
+              href="/checking"
+              className="block px-5 py-4 text-sm font-semibold text-gray-900 hover:bg-gray-50"
+            >
+              Open Checking Account
+            </Link>
+
+            <Link
+              href="/savings"
+              className="block border-t border-gray-100 px-5 py-4 text-sm font-semibold text-gray-900 hover:bg-gray-50"
+            >
+              Open Savings Account
+            </Link>
+          </div>
+        )}
+      </div>
         {/* Review Section */}
         <Star />
       </div>
