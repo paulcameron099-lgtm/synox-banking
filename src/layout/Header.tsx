@@ -42,9 +42,9 @@ export default function Header() {
       {/* Transparent Header - Before Scroll */}
       <div
         className={`fixed w-full top-0 z-30 lg:h-24 h-22 bg-zinc-950 shadow-lg transition-all duration-500 ease-in-out ${
-          scrolling
-            ? "-translate-y-full opacity-0"
-            : "translate-y-0 opacity-100"
+         scrolling
+            ? "-translate-y-full opacity-0 pointer-events-none"
+            : "translate-y-0 opacity-100 pointer-events-auto"
         }`}
       >
         <div className="flex justify-between py-7 md:px-20 px-10 bg-transparent">
@@ -68,8 +68,8 @@ export default function Header() {
       <div
         className={`fixed w-full top-0 z-30 lg:h-20 h-18 bg-white shadow-lg transition-transform duration-500 ease-in-out ${
           scrolling
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0"
+            ? "translate-y-0 opacity-100 pointer-events-auto"
+            : "-translate-y-full opacity-0 pointer-events-none"
         }`}
       >
         <div className="flex justify-between lg:py-5 md:py-4 py-5 md:px-20 px-10">
