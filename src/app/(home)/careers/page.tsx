@@ -422,7 +422,7 @@ export default function CareersPage() {
           </div>
 
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.4fr]">
-            <div className="text-center lg:text-left">
+            <div className="order-2 text-center lg:order-1 lg:text-left">
               <p className="font-Euclid text-[18px] font-semibold leading-10 text-black">
                 “What stands out most about Synox is the balance between ambition and support. 
                 You’re encouraged to think creatively, contribute ideas, and grow professionally 
@@ -439,7 +439,7 @@ export default function CareersPage() {
               </p>
             </div>
 
-            <div className="flex justify-center lg:justify-end">
+            <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
               <div className="relative h-[220px] w-[220px] overflow-hidden rounded-full bg-gray-100 shadow-lg">
                 <Image
                   src="/images/careers-quote-2.avif"

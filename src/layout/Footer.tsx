@@ -34,7 +34,7 @@ export default function Footer() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-row items-center gap-5">
+            {/* <div className="flex flex-row items-center gap-5">
               <HiOutlineLocationMarker className="text-white text-[45px] bg-[#ffffff1a] rounded-full px-3 py-3" />
               <div className="flex flex-col justify-start items-start gap-2">
                 <h3 className="text-white font-medium font-Poppins text-[14px]">
@@ -44,53 +44,15 @@ export default function Footer() {
                   Indiana, Indianapolis, USA
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
           <hr className="bg-white/30 w-full h-px mx-auto mt-[70px] mb-0 border-0" />
           <div className="flex lg:flex-row flex-col lg:justify-center justify-start lg:items-center items-start xl:gap-48 lg:gap-40 gap-20 py-10">
-              <div className="flex flex-row gap-2 items-center justify-start">
-                <Link
-                  href="/"
-                  className="bg-blue-500 py-2 px-2 text-white font-medium font-Poppins text-[14px] rounded-lg"
-                >
-                  Facebook
-                </Link>
-                <Link
-                  href="/"
-                  className="bg-blue-500 py-2 px-2 text-white font-medium font-Poppins text-[14px] rounded-lg"
-                >
-                  Twitter
-                </Link>
-              </div>
             <div className='flex md:flex-row flex-col items-center gap-24'>
-            <div className="flex flex-col gap-5">
-              <h3 className="text-white font-medium font-Poppins text-[16px]">
-                Solutions
-              </h3>
-              <Link
-                href="/"
-                className="font-medium font-Popppins text-[20px] text-white hover:text-yellow-500 hover:underline"
-              >
-                Digital & Neobanking
-              </Link>
-              <Link
-                href="/"
-                className="font-medium font-Popppins text-[20px] text-white hover:text-yellow-500 hover:underline"
-              >
-                B2B Payments
-              </Link>
-              <Link
-                href="/"
-                className="font-medium font-Popppins text-[20px] text-white hover:text-yellow-500 hover:underline"
-              >
-                Growth & Activation
-              </Link>
-              
-            </div>
-            <div className="flex flex-col gap-5">
-              <h3 className="text-white font-medium font-Poppins text-[16px]">
+            <div className="flex md:flex-row flex-col gap-5">
+              {/* <h3 className="text-white font-medium font-Poppins text-[16px]">
                 Products
-              </h3>
+              </h3> */}
               <Link
                 href="/"
                 className="font-medium font-Popppins text-[20px] text-white hover:text-yellow-500 hover:underline"
@@ -123,7 +85,7 @@ export default function Footer() {
             {/* Right side - terms & privacy */}
             <div className="flex md:flex-row flex-col md:items-center items-start gap-6">
               <Link
-                href="/"
+                href="/terms-and-conditions"
                 className="font-medium font-Poppins text-[16px] text-white hover:text-yellow-500 hover:underline"
               >
                 Terms & Conditions
@@ -133,7 +95,7 @@ export default function Footer() {
               <span className="h-6 w-px bg-white/30 md:flex hidden"></span>
 
               <Link
-                href="/"
+                href="/privacy"
                 className="font-medium font-Poppins text-[16px] text-white hover:text-yellow-500 hover:underline"
               >
                 Privacy Policy

@@ -138,7 +138,7 @@ export default function DirectDepositPage() {
           <div className="mt-12 rounded-3xl bg-black p-6 text-white md:p-10 lg:p-14">
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <div className="flex justify-center">
-                <div className="relative h-60 w-full max-w-[380px] overflow-hidden md:h-[400px]">
+                <div className="relative h-60 w-full max-w-[380px] overflow-hidden md:h-[500px]">
                   <Image
                     src="/images/new-direct.jpeg"
                     alt="Direct deposit setup"

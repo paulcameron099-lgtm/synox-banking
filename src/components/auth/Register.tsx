@@ -439,7 +439,7 @@ export default function Register() {
             <p>
               I have read and agreed to Synox{" "}
               <Link
-                href="/privacy-policy"
+                href="/privacy"
                 target="_blank"
                 className="text-[#1e1e1e] font-medium underline hover:text-[#1e1e1e]"
               >
@@ -447,7 +447,7 @@ export default function Register() {
               </Link>{" "}
               and{" "}
               <Link
-                href="/terms-of-service"
+                href="/terms-and-conditions"
                 target="_blank"
                 className="text-[#1e1e1e] font-medium underline hover:text-[#1e1e1e]"
               >
