@@ -146,7 +146,7 @@ export default function SpendingPage() {
               Synox Bank Spending Account
             </p>
 
-            <h1 className="mt-5 font-Euclid text-4xl font-bold leading-tight md:text-6xl">
+            <h1 className="mt-5 font-Euclid text-4xl font-bold leading-tight md:text-5xl">
               A checking account built for convenience.
             </h1>
 
@@ -161,7 +161,7 @@ export default function SpendingPage() {
           <div className="flex justify-center">
             <div className="relative h-[260px] w-full max-w-[480px] overflow-hidden md:h-[360px]">
               <Image
-                src="/images/synox-spending.webp"
+                src="/images/synox-atm.jpeg"
                 alt="Synox Bank"
                 fill
                 className="object-cover"
@@ -174,7 +174,7 @@ export default function SpendingPage() {
       {/* No monthly fees */}
       <section className="w-full px-5 py-20 md:px-10 lg:px-20">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-center font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="text-center font-Euclid text-3xl font-bold text-black md:text-4xl">
             No monthly fees, more money to work with.
           </h2>
 
@@ -237,14 +237,14 @@ export default function SpendingPage() {
       {/* Covered */}
       <section className="w-full bg-black px-5 py-20 text-white md:px-10 lg:px-20">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-center font-Euclid text-3xl font-bold md:text-5xl">
+          <h2 className="text-center font-Euclid text-3xl font-bold md:text-4xl">
             We’ve got you covered.
           </h2>
 
           <div className="mt-14 grid items-center gap-12 lg:grid-cols-2">
             <div className="relative h-[280px] overflow-hidden md:h-[520px]">
               <Image
-                src="/images/spending-image2.webp"
+                src="/images/synox-spending.jpeg"
                 alt="Synox ATM support"
                 fill
                 className="object-cover"
@@ -271,7 +271,7 @@ export default function SpendingPage() {
       <section className="w-full px-5 py-20 md:px-10 lg:px-20">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+            <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
               Zoom in with smart tools.
             </h2>
 
@@ -411,7 +411,7 @@ export default function SpendingPage() {
         <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-14 lg:grid-cols-2">
             <div className="text-center lg:text-left">
-                <h2 className="font-Euclid text-3xl font-bold md:text-5xl">
+                <h2 className="font-Euclid text-3xl font-bold md:text-4xl">
                 Better banking, starting now.
                 </h2>
 
@@ -462,7 +462,7 @@ export default function SpendingPage() {
         <section className="w-full px-5 py-24 md:px-10 lg:px-20">
         <div className="mx-auto max-w-7xl">
             <div className="text-center">
-            <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+            <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
                 The reviews are in.
             </h2>
 

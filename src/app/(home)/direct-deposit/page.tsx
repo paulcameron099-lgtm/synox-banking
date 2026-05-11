@@ -92,7 +92,7 @@ export default function DirectDepositPage() {
       {/* Benefits */}
       <section className="w-full px-5 py-20 md:px-10 lg:px-20">
         <div className="mx-auto max-w-5xl text-center">
-          <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
             Quick setup. Awesome benefits.
           </h2>
 
@@ -131,7 +131,7 @@ export default function DirectDepositPage() {
       {/* Setup Options */}
       <section className="w-full px-5 pb-20 md:px-10 lg:px-20">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-center font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="text-center font-Euclid text-3xl font-bold text-black md:text-4xl">
             Simple setup options.
           </h2>
 
@@ -140,7 +140,7 @@ export default function DirectDepositPage() {
               <div className="flex justify-center">
                 <div className="relative h-60 w-full max-w-[380px] overflow-hidden md:h-[400px]">
                   <Image
-                    src="/images/direct-deposit-mobile-phone.svg"
+                    src="/images/new-direct.jpeg"
                     alt="Direct deposit setup"
                     fill
                     className="object-cover"
@@ -149,7 +149,7 @@ export default function DirectDepositPage() {
               </div>
 
               <div className="text-center lg:text-left">
-                <h3 className="font-Euclid text-3xl font-bold md:text-4xl">
+                <h3 className="font-Euclid text-3xl font-bold md:text-3xl">
                   Set up automatically in just a few taps.
                 </h3>
 
@@ -188,7 +188,7 @@ export default function DirectDepositPage() {
               className="grid items-center gap-8 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm md:p-8 lg:grid-cols-[1.4fr_0.6fr]"
             >
               <div className="text-center lg:text-left">
-                <h2 className="font-Euclid text-2xl font-bold text-black md:text-4xl">
+                <h2 className="font-Euclid text-1xl font-bold text-black md:text-3xl">
                   {card.title}
                 </h2>
 
@@ -215,7 +215,7 @@ export default function DirectDepositPage() {
       {/* CTA */}
       <section className="w-full px-5 pb-24 md:px-10 lg:px-20">
         <div className="mx-auto max-w-4xl rounded-3xl bg-gray-100 px-6 py-14 text-center md:px-10">
-          <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
             Bank better, starting now.
           </h2>
 
@@ -224,7 +224,7 @@ export default function DirectDepositPage() {
           </p>
 
           <Link
-            href="/savings"
+            href="/checking"
             className="mt-8 inline-flex rounded-full bg-black px-8 py-4 font-Euclid font-semibold text-white hover:bg-gray-800"
           >
             Open Account

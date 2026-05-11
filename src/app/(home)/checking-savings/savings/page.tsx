@@ -177,7 +177,7 @@ export default function SavingsPage() {
       {/* Intro */}
       <section className="w-full px-5 py-20 md:px-10 lg:px-20">
         <div className="mx-auto max-w-5xl text-center">
-          <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
             Finally, a savings account that helps your money work smarter.
           </h2>
 
@@ -218,7 +218,7 @@ export default function SavingsPage() {
       {/* Buckets */}
       <section className="w-full px-5 pb-20 md:px-10 lg:px-20">
         <div className="mx-auto max-w-5xl text-center">
-          <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
             Organize using buckets.
           </h2>
           <p className="mt-4 font-Euclid text-lg text-gray-600">
@@ -253,7 +253,7 @@ export default function SavingsPage() {
       {/* Boosters */}
       <section className="w-full px-5 pb-20 md:px-10 lg:px-20">
         <div className="mx-auto max-w-5xl text-center">
-          <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
             Optimize with boosters.
           </h2>
           <p className="mt-4 font-Euclid text-lg text-gray-600">
@@ -287,9 +287,9 @@ export default function SavingsPage() {
       {/* Dynamic duo */}
       <section className="w-full px-5 pb-24 md:px-10 lg:px-20">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
-          <div className="relative h-[280px] overflow-hidden rounded-3xl bg-gray-100 shadow-lg md:h-[480px]">
+          <div className="relative h-[280px] overflow-hidden rounded-3xl bg-gray-100 shadow-lg md:h-[580px]">
             <Image
-              src="/images/dynamic-duo.avif"
+              src="/images/saving-duo.jpeg"
               alt="Savings and spending"
               fill
               className="object-cover"
@@ -297,7 +297,7 @@ export default function SavingsPage() {
           </div>
 
           <div className="text-center lg:text-left">
-            <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+            <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
               Meet our dynamic duo.
             </h2>
             <p className="mt-5 font-Euclid text-lg leading-8 text-gray-600">
@@ -319,7 +319,7 @@ export default function SavingsPage() {
       {/* Black Features */}
       <section className="w-full bg-black px-5 py-20 text-white md:px-10 lg:px-20">
         <div className="mx-auto max-w-7xl text-center">
-          <h2 className="font-Euclid text-3xl font-bold md:text-5xl">
+          <h2 className="font-Euclid text-3xl font-bold md:text-4xl">
             Come for the helpful tools. Stay for everything else.
           </h2>
 
@@ -446,7 +446,7 @@ function TransparencySection() {
     <section className="w-full px-5 pb-24 md:px-10 lg:px-20">
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
-          <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
             Trust through transparency.
           </h2>
           <p className="mt-4 font-Euclid text-lg text-gray-600">
@@ -496,7 +496,7 @@ function GettingStartedSection() {
       <div className="mx-auto max-w-7xl">
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <div className="text-center lg:text-left">
-            <h2 className="font-Euclid text-3xl font-bold md:text-5xl">
+            <h2 className="font-Euclid text-3xl font-bold md:text-4xl">
               Better saving, starting now.
             </h2>
             <p className="mt-5 font-Euclid text-lg text-gray-300">
@@ -547,7 +547,7 @@ function ReviewsSection() {
     <section className="w-full px-5 py-24 md:px-10 lg:px-20">
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
-          <h2 className="font-Euclid text-3xl font-bold text-black md:text-5xl">
+          <h2 className="font-Euclid text-3xl font-bold text-black md:text-4xl">
             The reviews are in.
           </h2>
           <p className="mt-4 font-Euclid text-lg text-gray-600">

@@ -18,7 +18,7 @@ const mobileMenus: Menu[] = [
   { id: "/about", label: "About Us" },
   { id: "/contact", label: "Contact Us" },
   { id: "/careers", label: "Career" },
-  { id: "/faq", label: "FAQs" },
+  { id: "/faqs", label: "FAQs" },
 ];
 
 interface Props {

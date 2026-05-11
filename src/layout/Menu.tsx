@@ -23,7 +23,7 @@ const menus: Menu[] = [
     submenu: [
       { id: "/about", label: "About Us" },
       { id: "/contact", label: "Contact Us" },
-      { id: "/faq", label: "FAQs" },
+      { id: "/faqs", label: "FAQs" },
       { id: "/careers", label: "Career" },
     ],
   },
