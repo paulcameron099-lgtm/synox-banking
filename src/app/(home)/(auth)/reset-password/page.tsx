@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -11,6 +11,7 @@ const inputClass =
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [sessionReady, setSessionReady] = useState(false);
 
   const [showPwd, setShowPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
@@ -18,6 +19,39 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
+  useEffect(() => {
+  const prepareRecoverySession = async () => {
+    setErrorMsg("");
+
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get("code");
+
+    if (code) {
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+      if (error) {
+        setErrorMsg(error.message);
+        return;
+      }
+
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) {
+      setErrorMsg(
+        "Your reset link has expired or is invalid. Please request a new password reset link."
+      );
+      return;
+    }
+
+    setSessionReady(true);
+  };
+
+  prepareRecoverySession();
+}, []);
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,10 +179,14 @@ export default function ResetPasswordPage() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !sessionReady}
                 className="w-full rounded-xl bg-zinc-950 py-3 font-medium text-white transition hover:bg-zinc-900 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {loading ? "Updating password..." : "Update Password"}
+                {loading
+                  ? "Updating password..."
+                  : !sessionReady
+                  ? "Preparing reset session..."
+                  : "Update Password"}
               </button>
 
               {successMsg && (
