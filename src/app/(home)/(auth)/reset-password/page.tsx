@@ -20,33 +20,32 @@ export default function ResetPasswordPage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  useEffect(() => {
+useEffect(() => {
   const prepareRecoverySession = async () => {
     setErrorMsg("");
 
     const url = new URL(window.location.href);
-    const code = url.searchParams.get("code");
+    const token_hash = url.searchParams.get("token_hash");
+    const type = url.searchParams.get("type");
 
-    if (code) {
-      const { error } = await supabase.auth.exchangeCodeForSession(code);
-
-      if (error) {
-        setErrorMsg(error.message);
-        return;
-      }
-
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
-    const { data } = await supabase.auth.getSession();
-
-    if (!data.session) {
+    if (!token_hash || type !== "recovery") {
       setErrorMsg(
-        "Your reset link has expired or is invalid. Please request a new password reset link."
+        "Your reset link is invalid or expired. Please request a new password reset link."
       );
       return;
     }
 
+    const { error } = await supabase.auth.verifyOtp({
+      token_hash,
+      type: "recovery",
+    });
+
+    if (error) {
+      setErrorMsg(error.message);
+      return;
+    }
+
+    window.history.replaceState({}, document.title, window.location.pathname);
     setSessionReady(true);
   };
 
