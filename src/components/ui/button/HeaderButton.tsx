@@ -44,7 +44,7 @@ export default function HeaderButton({ variant, forceDarkText = false }: Prop) {
           } translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out`}
         ></span>
       </div>
-      <div
+      {/* <div
         className={`relative flex items-center gap-2 md:px-5 px-3 py-2 overflow-hidden group ${
           test ? "border border-black" : "border border-gray-800"
         }`}
@@ -72,7 +72,7 @@ export default function HeaderButton({ variant, forceDarkText = false }: Prop) {
             variant === "white" ? "bg-black" : "bg-white"
           } translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out`}
         ></span>
-      </div>
+      </div> */}
     </div>
   );
 }
