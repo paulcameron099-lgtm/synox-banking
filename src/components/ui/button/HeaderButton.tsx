@@ -5,10 +5,11 @@ import { useSelector} from 'react-redux';
 import { RootState } from "@/redux/store";
 
 interface Prop {
-  variant: "white" | "transparent"
+  variant: "white" | "transparent";
+  forceDarkText?: boolean;
 }
 
-export default function HeaderButton({variant}: Prop) {
+export default function HeaderButton({ variant, forceDarkText = false }: Prop) {
   const test = useSelector((state: RootState) => state.header.test);
 
   return (
@@ -24,9 +25,7 @@ export default function HeaderButton({variant}: Prop) {
             variant === "white"
               ? "group-hover:text-white"
               : "group-hover:text-black"
-          } transition-colors duration-500 ${
-            test ? "text-balck" : "text-yellow-500"
-          }`}
+          } transition-colors duration-500 ${forceDarkText ? "text-yellow-500" : test ? "text-black" : "text-yellow-500"}`}
         />
         <Link
           href="/login"
@@ -35,7 +34,7 @@ export default function HeaderButton({variant}: Prop) {
               ? "group-hover:text-white"
               : "group-hover:text-black"
           } transition-colors duration-500
-                ${test ? "text-black" : "text-white"}`}
+                ${forceDarkText ? "text-black" : test ? "text-black" : "text-white"}`}
         >
           Login
         </Link>
@@ -55,9 +54,7 @@ export default function HeaderButton({variant}: Prop) {
             variant === "white"
               ? "group-hover:text-white"
               : "group-hover:text-black"
-          } transition-colors duration-500 ${
-            test ? "text-balck" : "text-yellow-500"
-          }`}
+          } transition-colors duration-500 ${forceDarkText ? "text-yellow-500" : test ? "text-black" : "text-yellow-500"}`}
         />
         <Link
           href="/register"
@@ -66,7 +63,7 @@ export default function HeaderButton({variant}: Prop) {
               ? "group-hover:text-white"
               : "group-hover:text-black"
           } transition-colors duration-500
-                ${test ? "text-black" : "text-white"}`}
+               ${forceDarkText ? "text-black" : test ? "text-black" : "text-white"}`}
         >
           Register
         </Link>

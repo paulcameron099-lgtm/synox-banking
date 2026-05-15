@@ -48,6 +48,11 @@ export default function AccountApplicationForm({
       return;
     }
 
+    if (form.phone && form.phone.length < 10) {
+      setErrorMsg("Phone number must be at least 10 digits.");
+      return;
+    }
+
     setLoading(true);
 
     const res = await fetch("/api/account-applications/submit", {
@@ -131,7 +136,12 @@ export default function AccountApplicationForm({
           <input
             type="tel"
             value={form.phone}
-            onChange={(e) => updateField("phone", e.target.value)}
+            onChange={(e) =>
+                updateField(
+                  "phone",
+                  e.target.value.replace(/\D/g, "").slice(0, 15)
+                )
+              }
             className={inputClass}
             placeholder="Enter phone number"
           />

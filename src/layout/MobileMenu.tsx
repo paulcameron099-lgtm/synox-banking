@@ -150,7 +150,7 @@ export default function MobileMenu({ variant, dispatch }: Props) {
             </Link>
           ))}
 
-          <Button variant="white" />
+          <Button variant="white" forceDarkText />
         </div>
       )}
     </div>

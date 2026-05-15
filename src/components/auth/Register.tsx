@@ -81,7 +81,7 @@ export default function Register() {
   const phoneError = useMemo(() => {
     if (!phone) return "";
     if (!/^\d+$/.test(phone)) return "Phone number must contain digits only.";
-    if (phone.length !== 11) return "Phone number must be 11 digits.";
+    if (phone && phone.length < 10) return "Phone number must be at least 10 digits.";
     return "";
   }, [phone]);
 
