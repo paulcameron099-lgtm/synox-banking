@@ -30,7 +30,7 @@ export default function Footer() {
                   Call Us (USA)
                 </h3>
                 <p className="text-white font-medium font-Poppins xl:text-[20px] lg:text-[18px] md:text-[16px] text-[14px]">
-                  +(1) 1230 452 8597
+                  +(1) 202 794 5800
                 </p>
               </div>
             </div>

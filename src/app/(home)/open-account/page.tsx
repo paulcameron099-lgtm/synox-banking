@@ -20,12 +20,12 @@ const accounts = [
     description:
       "Great for: Making everyday purchases with all the benefits of a checking account, including 24/7 support, fraud protection and access to no-fee ATMs.",
     apyOne: "0.10%",
-     annual: "Annual Percentage Yield &#40;APY&#41;",
+     annual: "Annual Percentage Yield",
     apyOneText: "For daily balances less than $15,000",
     apyTwo: "0.25%",
     apyTwoText: "For daily balances of $15,000 or more",
     benefits: [
-      "Use any Allpoint® or MoneyPass® ATM in the U.S. for free",
+      "Use any synoxpoint® or MoneyPass® ATM in the U.S. for free",
       "Unlimited deposits",
       "No minimum opening deposit",
       "24/7 fraud monitoring",
@@ -39,7 +39,7 @@ const accounts = [
     title: "Savings Plus",
     description:
       "Great for: Building long-term savings with competitive interest rates and smart savings tools.",
-       annual: "Annual Percentage Yield &#40;APY&#41;",
+       annual: "Annual Percentage Yield",
 
     apyOne: "1.20%",
     apyOneText: "For balances less than $25,000",
@@ -63,7 +63,7 @@ const accounts = [
     title: "Money Market",
     description:
       "Great for: Earning higher interest while keeping flexible access to your money.",
-    annual: "Annual Percentage Yield &#40;APY&#41;",
+    annual: "Annual Percentage Yield",
 
     apyOne: "2.50%",
     apyOneText: "For balances less than $50,000",
