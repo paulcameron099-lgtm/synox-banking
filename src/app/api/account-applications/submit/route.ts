@@ -87,38 +87,60 @@ export async function POST(req: Request) {
 
     let emailWarning = "";
 
-    try {
-      await sendMail({
-        to: email,
-        subject: `Your Synox ${accountType} Account Application Has Been Received`,
-        html: `
-          <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-            <h2>Application Received</h2>
+      try {
+        await sendMail({
+          to: email,
+          subject: `Your Synox ${accountType} Account Application Has Been Received`,
+          html: `
+              <div style="font-family: Arial, sans-serif; line-height: 1.7; color:#111827;">
+              <h2 style="margin-bottom:20px;">
+                Application Received Successfully
+              </h2>
 
-            <p>Hello ${firstName},</p>
+              <p>Hello ${firstName},</p>
 
-            <p>
-              Your Synox ${
-                accountType === "checking" ? "Checking" : "Savings"
-              } Account application has been received successfully.
-            </p>
+              <p>
+                Your Synox ${
+                  accountType === "checking" ? "Checking" : "Savings"
+                } Account application has been received successfully and is now under review.
+              </p>
 
-            <p>
-              Our account review team will review your submitted information and
-              contact you within <strong>24 to 48 hours</strong>.
-            </p>
+              <p>
+                Our account review team will carefully review your submitted information and contact you within
+                <strong>24 to 48 hours</strong>.
+              </p>
 
-            <br />
+              <p>
+                To help us confirm that this email address is active and accessible to you,
+                please reply to this email with:
+              </p>
 
-            <p>Thank you for choosing Synox.</p>
-            <p style="font-weight: bold;">— Synox Team</p>
-          </div>
-        `,
-      });
-    } catch (emailError: any) {
-      console.error("Account application email failed:", emailError?.message);
-      emailWarning = "Application submitted, but email notification failed.";
-    }
+              <div style="margin:20px 0; padding:16px; background:#f3f4f6; border-radius:10px;">
+                <p style="margin:0; font-weight:bold;">
+                  “I confirm that I submitted this application to Synox.”
+                </p>
+              </div>
+
+              <p>
+                This confirmation helps us maintain secure communication throughout your account review process.
+              </p>
+
+              <br />
+
+              <p>
+                Thank you for choosing Synox.
+              </p>
+
+              <p style="font-weight:bold;">
+                — Synox Team
+              </p>
+            </div>
+          `,
+        });
+      } catch (emailError: any) {
+        console.error("Account application email failed:", emailError?.message);
+        emailWarning = "Application submitted, but email notification failed.";
+      }
 
     return NextResponse.json({
       success: true,
