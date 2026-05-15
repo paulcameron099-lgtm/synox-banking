@@ -105,16 +105,12 @@ export default function CardsPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
-          <div className="rounded-2xl bg-linear-to-br from-gray-950 to-gray-800 p-6 text-white shadow-sm">
-            <p className="text-sm text-gray-300">Synox</p>
-            <h2 className="mt-8 text-xl font-semibold">Debit Card</h2>
-            <p className="mt-6 tracking-[0.35em] text-gray-200">
-              **** **** **** 4829
-            </p>
-            <div className="mt-6 flex items-center justify-between text-xs text-gray-300">
-              <span>USD Account</span>
-              <span>VIRTUAL / PHYSICAL</span>
-            </div>
+          <div className="overflow-hidden rounded-2xl shadow-sm">
+            <img
+              src="/images/synox-debit-card.jpeg"
+              alt="Synox Debit Card"
+              className="h-full w-full object-cover"
+            />
           </div>
 
           <h2 className="mt-6 text-lg font-bold text-gray-900 dark:text-white">

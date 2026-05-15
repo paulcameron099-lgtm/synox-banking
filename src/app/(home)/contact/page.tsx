@@ -9,16 +9,43 @@ const inputClass =
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setLoading(true);
 
-    // Later connect EmailJS/API route here
-    setTimeout(() => {
-      setLoading(false);
-      alert("Message sent successfully.");
-    }, 800);
+  const form = e.currentTarget;
+
+  const formData = new FormData(form);
+
+  const payload = {
+    fullName: formData.get("fullName"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    topic: formData.get("topic"),
+    subject: formData.get("subject"),
+    message: formData.get("message"),
   };
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await res.json();
+
+  setLoading(false);
+
+  if (!res.ok) {
+    alert(data?.error || "Message failed to send.");
+    return;
+  }
+
+  alert("Message sent successfully.");
+  form.reset();
+};
 
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-gray-50 px-4 py-12 lg:px-8 mt-28">
@@ -71,6 +98,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="text"
+                    name="fullName"
                     required
                     placeholder="Enter your full name"
                     className={inputClass}
@@ -83,6 +111,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     required
                     placeholder="Enter your email"
                     className={inputClass}
@@ -97,6 +126,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
                     placeholder="Enter your phone number"
                     className={inputClass}
                   />
@@ -106,7 +136,7 @@ export default function ContactPage() {
                   <label className="mb-1 block text-sm font-medium text-gray-700">
                     Topic
                   </label>
-                  <select required className={inputClass}>
+                  <select required className={inputClass} name="topic">
                     <option value="">Select topic</option>
                     <option value="account">Account Support</option>
                     <option value="kyc">KYC Verification</option>
@@ -123,6 +153,7 @@ export default function ContactPage() {
                 </label>
                 <input
                   type="text"
+                  name="subject"
                   required
                   placeholder="Enter message subject"
                   className={inputClass}
@@ -135,6 +166,7 @@ export default function ContactPage() {
                 </label>
                 <textarea
                   required
+                  name="message"
                   rows={5}
                   placeholder="Tell us how we can help..."
                   className={`${inputClass} resize-none`}
