@@ -220,6 +220,7 @@ export default function Register() {
       country: country.trim(),
       cityState: cityState.trim(),
       postalCode: postalCode.trim(),
+       applicationId,
     }),
     });
 
