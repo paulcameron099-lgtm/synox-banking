@@ -19,7 +19,7 @@ export default function Footer() {
                   Write to us
                 </h3>
                 <p className="text-white font-medium font-Poppins xl:text-[20px] lg:text-[18px] md:text-[16px] text-[14px]">
-                  office@synox.com
+                  support@synox.com
                 </p>
               </div>
             </div>
