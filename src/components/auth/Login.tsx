@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const inputClass =
   "w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-200";
 
 export default function Login() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +23,12 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
   const [showResend, setShowResend] = useState(false);
+
+  useEffect(() => {
+  if (searchParams.get("confirmed") === "true") {
+    setInfoMsg("Email confirmed successfully. You can now sign in.");
+  }
+}, [searchParams]);
 
   const handleSignIn = async (e: React.FormEvent) => {
   e.preventDefault();
