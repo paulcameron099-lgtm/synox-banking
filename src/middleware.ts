@@ -20,9 +20,18 @@ export async function middleware(request: NextRequest) {
   }
 
   if (user && isDashboardRoute) {
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  const isAdmin =
+    profile?.role === "admin" || profile?.role === "super_admin";
+
   const loginVerified = request.cookies.get("login_verified")?.value;
 
-  if (loginVerified !== "true") {
+  if (!isAdmin && loginVerified !== "true") {
     const url = request.nextUrl.clone();
     url.pathname = "/verify-login";
     return NextResponse.redirect(url);

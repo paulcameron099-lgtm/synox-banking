@@ -81,6 +81,13 @@ const navItems: NavItem[] = [
     path: "/dashboard/account-applications",
     roles: ["admin", "super_admin"],
   },
+
+    {
+    icon: <TbTransferOut size={22} />,
+    name: "External Transfers",
+    path: "/dashboard/external-transfer",
+    roles: ["admin", "super_admin"],
+  },
   // {
   //   icon: <PiHandWithdrawLight size={24} />,
   //   name: "Withdrawals",

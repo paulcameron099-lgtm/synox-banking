@@ -16,6 +16,23 @@ function formatUSD(amountInCents: number) {
   }).format(amountInCents / 100);
 }
 
+function formatExternalStatus(status: string) {
+  return status.replaceAll("_", " ");
+}
+
+function externalStatusClass(status: string) {
+  switch (status) {
+    case "completed":
+      return "bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-400";
+    case "rejected":
+      return "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400";
+    case "processing":
+      return "bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400";
+    default:
+      return "bg-yellow-50 text-yellow-700 dark:bg-yellow-950/40 dark:text-yellow-400";
+  }
+}
+
 export default async function AdminDashboardPage() {
   const supabase = await createSupabaseServerClient();
 
@@ -54,6 +71,15 @@ export default async function AdminDashboardPage() {
     const { data: transactions } = await supabase
       .from("ledger_entries")
       .select("id, type, amount, reference, description, status, created_at")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })
+      .limit(5);
+
+        const { data: externalTransfers } = await supabase
+      .from("external_transfer_requests")
+      .select(
+        "id, recipient_bank_name, recipient_account_name, recipient_account_number, amount, reference, status, fee_amount, fee_payment_confirmed, created_at"
+      )
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(5);
@@ -225,6 +251,78 @@ export default async function AdminDashboardPage() {
       No accounts found.
     </div>
   )}
+</div>
+
+<div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
+  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 className="text-lg font-bold text-gray-900 dark:text-white sm:text-xl">
+        External Transfer Requests
+      </h2>
+
+      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        Track external bank transfers awaiting review, fee confirmation, or completion.
+      </p>
+    </div>
+  </div>
+
+  <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
+    {externalTransfers && externalTransfers.length > 0 ? (
+      <div className="divide-y divide-gray-200 dark:divide-gray-800">
+        {externalTransfers.map((transfer) => (
+          <div
+            key={transfer.id}
+            className="flex flex-col gap-4 p-4 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="font-medium text-gray-900 dark:text-white">
+                  {transfer.recipient_account_name}
+                </p>
+
+                <span
+                  className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${externalStatusClass(
+                    transfer.status
+                  )}`}
+                >
+                  {formatExternalStatus(transfer.status)}
+                </span>
+
+                {transfer.fee_payment_confirmed && (
+                  <span className="rounded-full bg-green-50 px-2.5 py-1 text-xs font-semibold text-green-700 dark:bg-green-950/40 dark:text-green-400">
+                    Fee Confirmed
+                  </span>
+                )}
+              </div>
+
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                {transfer.recipient_bank_name} • {transfer.recipient_account_number}
+              </p>
+
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                Ref: {transfer.reference} •{" "}
+                {new Date(transfer.created_at).toLocaleString()}
+              </p>
+            </div>
+
+            <div className="lg:text-right">
+              <p className="text-lg font-bold text-gray-900 dark:text-white">
+                {formatUSD(Number(transfer.amount) * 100)}
+              </p>
+
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                Confirmation fee: {formatUSD(Number(transfer.fee_amount || 0) * 100)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="p-6 text-center text-sm text-gray-500 dark:text-gray-400 sm:p-8">
+        No external transfer requests yet.
+      </div>
+    )}
+  </div>
 </div>
 
   <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-6">
