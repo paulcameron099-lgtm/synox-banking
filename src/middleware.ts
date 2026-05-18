@@ -19,6 +19,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (user && isDashboardRoute) {
+  const loginVerified = request.cookies.get("login_verified")?.value;
+
+  if (loginVerified !== "true") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/verify-login";
+    return NextResponse.redirect(url);
+  }
+}
+
   if (user && isAdminRoute) {
     const { data: profile } = await supabase
       .from("profiles")

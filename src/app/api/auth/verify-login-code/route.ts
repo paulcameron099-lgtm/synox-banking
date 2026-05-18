@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -62,10 +63,21 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      userId: verification.user_id,
+   const cookieStore = await cookies();
+
+    cookieStore.set("login_verified", "true", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24, // 24 hours
     });
+
+    return NextResponse.json({
+    success: true,
+    userId: verification.user_id,
+    });
+
   } catch (err: any) {
     return NextResponse.json(
       { error: err.message || "Server error." },

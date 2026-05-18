@@ -6,10 +6,18 @@ import { supabase } from "@/lib/supabase";
 export default function LogoutPage() {
   useEffect(() => {
     const handleLogout = async () => {
-      const { error } = await supabase.auth.signOut();
+      try {
+        await fetch("/api/auth/clear-login-verification", {
+          method: "POST",
+        });
 
-      if (error) {
-        console.error("Logout error:", error.message);
+        const { error } = await supabase.auth.signOut();
+
+        if (error) {
+          console.error("Logout error:", error.message);
+        }
+      } catch (err) {
+        console.error("Logout failed:", err);
       }
 
       window.location.replace("/login");
