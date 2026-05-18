@@ -30,7 +30,7 @@ export default function Login() {
   }
 }, [searchParams]);
 
-  const handleSignIn = async (e: React.FormEvent) => {
+const handleSignIn = async (e: React.FormEvent) => {
   e.preventDefault();
 
   setErrorMsg("");
@@ -64,11 +64,11 @@ export default function Login() {
     return;
   }
 
-const { data: profile, error: profileError } = await supabase
-  .from("profiles")
-  .select("role, admin_status")
-  .eq("id", data.user.id)
-  .single();
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("role, admin_status")
+    .eq("id", data.user.id)
+    .single();
 
   if (profileError) {
     setLoading(false);
@@ -76,29 +76,55 @@ const { data: profile, error: profileError } = await supabase
     return;
   }
 
-  setInfoMsg("Signed in successfully. Redirecting...");
+  const isAdmin = profile?.role === "admin" || profile?.role === "super_admin";
+
+  if (isAdmin && profile?.admin_status === "deactivated") {
+    await supabase.auth.signOut();
+    setLoading(false);
+    setErrorMsg(
+      "Your admin access has been deactivated. Please contact the super admin."
+    );
+    return;
+  }
+
+  if (isAdmin) {
+    setInfoMsg("Signed in successfully. Redirecting...");
+    setEmail("");
+    setPassword("");
+    setLoading(false);
+
+    router.refresh();
+    router.push("/dashboard");
+    return;
+  }
+
+  const codeRes = await fetch("/api/auth/send-login-code", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: data.user.id,
+      email: usedEmail,
+    }),
+  });
+
+  const codeData = await codeRes.json().catch(() => ({}));
+
+  if (!codeRes.ok) {
+    await supabase.auth.signOut();
+    setLoading(false);
+    setErrorMsg(codeData?.error || "Unable to send login verification code.");
+    return;
+  }
+
+  setInfoMsg("Verification code sent. Please check your email.");
   setEmail("");
   setPassword("");
   setLoading(false);
 
   router.refresh();
-
-const isAdmin = profile?.role === "admin" || profile?.role === "super_admin";
-
-if (isAdmin && profile?.admin_status === "deactivated") {
-  await supabase.auth.signOut();
-  setLoading(false);
-  setErrorMsg(
-    "Your admin access has been deactivated. Please contact the super admin."
-  );
-  return;
-}
-
-if (isAdmin) {
-  router.push("/dashboard");
-} else {
-  router.push("/dashboard");
-}
+  router.push(`/verify-login?email=${encodeURIComponent(usedEmail)}`);
 };
 
   const resendConfirmationEmail = async () => {
