@@ -186,7 +186,7 @@ export default function ContactPage() {
               <div>
                 <p className="text-sm font-semibold text-gray-900">Email</p>
                 <p className="mt-1 text-sm text-gray-500">
-                  support@synox.com
+                  support@getsynox.com
                 </p>
               </div>
 
