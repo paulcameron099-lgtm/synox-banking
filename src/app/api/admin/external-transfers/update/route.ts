@@ -176,7 +176,7 @@ export async function POST(req: Request) {
       if (profile?.email && status === "awaiting_fee_payment") {
     await sendMail({
         to: profile.email,
-        subject: "External Transfer Confirmation Fee Instructions",
+        subject: "External Transfer - Instant Processing Fee Required",
         html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827;">
             <h2>Transfer Confirmation Required</h2>
@@ -184,8 +184,7 @@ export async function POST(req: Request) {
             <p>Hello ${profile.full_name || "Customer"},</p>
 
             <p>
-            Your external transfer request has been reviewed and requires a confirmation
-            and settlement processing fee before it can move to final processing.
+           We have reviewed your external transfer request, and it is currently pending final processing. To proceed with expedited handling, an instant external transfer fee is required.
             </p>
 
             <div style="margin: 20px 0; padding: 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px;">
@@ -202,7 +201,7 @@ export async function POST(req: Request) {
             </div>
 
             <div style="margin: 20px 0; padding: 16px; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px;">
-            <p style="margin: 0;"><strong>Confirmation Fee:</strong> $${Number(
+            <p style="margin: 0;"><strong>Instant External Transfer Fee:</strong> $${Number(
                 feeAmount || transfer.fee_amount || 0
             ).toFixed(2)}</p>
             <p style="margin: 8px 0 0 0;"><strong>Payment Method:</strong> Bitcoin / Crypto Checkout</p>
@@ -217,17 +216,17 @@ export async function POST(req: Request) {
             </div>
 
             <p>
-            Please use the secure payment link below to complete the confirmation fee:
+           To continue the process, please complete the fee payment using the secure payment link provided below:
             </p>
 
             <p style="margin: 24px 0;">
             <a href="${feeCryptoPaymentLink || transfer.fee_crypto_payment_link}" target="_blank" style="background:#111827;color:#ffffff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:bold;">
-                Pay Confirmation Fee
+                Pay Instant Transfer Fee
             </a>
             </p>
 
             <p>
-            After completing the payment, please reply to this email with:
+            Once the payment has been successfully processed, please reply to this email with the following confirmation:
             </p>
 
             <div style="margin: 18px 0; padding: 14px; background: #f3f4f6; border-radius: 10px;">
@@ -237,13 +236,13 @@ export async function POST(req: Request) {
             </div>
 
             <p>
-            Once your confirmation is received and reviewed, your transfer status will be updated in your Synox dashboard.
+            After verification, your transfer will be updated and moved to final processing in the Synox dashboard.
             </p>
 
             <br />
 
-            <p>Thank you for choosing Synox.</p>
-            <p style="font-weight: bold;">— Synox Transfers Team</p>
+            <p>Thank you,</p>
+            <p style="font-weight: bold;">Synox Support.</p>
         </div>
         `,
     });
