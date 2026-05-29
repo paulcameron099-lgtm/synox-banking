@@ -179,7 +179,6 @@ export async function POST(req: Request) {
         subject: "External Transfer - Instant Processing Fee Required",
         html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827;">
-            <h2>Transfer Confirmation Required</h2>
 
             <p>Hello ${profile.full_name || "Customer"},</p>
 
