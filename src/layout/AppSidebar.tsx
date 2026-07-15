@@ -88,6 +88,13 @@ const navItems: NavItem[] = [
     path: "/dashboard/external-transfer",
     roles: ["admin", "super_admin"],
   },
+
+  {
+    icon: <GiBank size={22} />,
+      name: "Generate Tranactions",
+      path: "/dashboard/generate-transactions",
+    roles: ["admin", "super_admin"],
+  },
   // {
   //   icon: <PiHandWithdrawLight size={24} />,
   //   name: "Withdrawals",
@@ -148,10 +155,22 @@ const othersItems: NavItem[] = [
 ];
 
 const AppSidebar: React.FC = () => {
-  const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
+  const {
+  isExpanded,
+  isMobileOpen,
+  isHovered,
+  setIsHovered,
+  toggleMobileSidebar,
+} = useSidebar();
   const pathname = usePathname();
   const [role, setRole] = useState<UserRole | null>(null);
   const [roleLoading, setRoleLoading] = useState(true);
+
+  const closeMobileSidebar = () => {
+  if (isMobileOpen) {
+    toggleMobileSidebar();
+  }
+};
 
  useEffect(() => {
   const fetchRole = async () => {
@@ -243,6 +262,7 @@ const AppSidebar: React.FC = () => {
             nav.path && (
               <Link
                 href={nav.path}
+                onClick={closeMobileSidebar}
                 className={`menu-item group ${
                   isActive(nav.path) ? "menu-item-active" : "menu-item-inactive"
                 }`}
@@ -280,6 +300,7 @@ const AppSidebar: React.FC = () => {
                   <li key={subItem.name}>
                     <Link
                       href={subItem.path}
+                      onClick={closeMobileSidebar}
                       className={`menu-dropdown-item ${
                         isActive(subItem.path)
                           ? "menu-dropdown-item-active"
@@ -418,7 +439,7 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link href="/">
+        <Link href="/" onClick={closeMobileSidebar}>
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <span className="dark:hidden"><Hero_blackLogo /></span>
