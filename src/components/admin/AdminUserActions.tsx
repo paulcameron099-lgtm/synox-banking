@@ -22,7 +22,9 @@ export default function AdminUserActions({
   const router = useRouter();
 
   const [amount, setAmount] = useState("");
-  const [fundingSource, setFundingSource] = useState("");
+  const [fundingBankName, setFundingBankName] = useState("");
+  const [fundingAccountName, setFundingAccountName] = useState("");
+  const [fundingAccountNumber, setFundingAccountNumber] = useState("");
   const [note, setNote] = useState("");
   const [loadingFund, setLoadingFund] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
@@ -41,12 +43,16 @@ export default function AdminUserActions({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        targetUserId: userId,
-        amount: Number(amount),
-        fundingSource,
-        note,
-      }),
+    body: JSON.stringify({
+      targetUserId: userId,
+      amount: Number(amount),
+
+      fundingBankName,
+      fundingAccountName,
+      fundingAccountNumber,
+
+      note,
+    }),
     });
 
     const data = await res.json();
@@ -58,7 +64,11 @@ export default function AdminUserActions({
     }
 
     setAmount("");
-    setFundingSource("");
+
+    setFundingBankName("");
+    setFundingAccountName("");
+    setFundingAccountNumber("");
+
     setNote("");
     setMessage(data?.emailWarning || "User account funded successfully.");
     router.refresh();
@@ -147,18 +157,50 @@ export default function AdminUserActions({
         </h2>
 
         <form onSubmit={handleFundUser} className="mt-5 space-y-4">
-          <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Funding Source
-            </label>
-            <input
-              value={fundingSource}
-              onChange={(e) => setFundingSource(e.target.value)}
-              required
-              placeholder="Example: Acme Ltd, John Smith"
-              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
-            />
-          </div>
+         <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Sender Bank Name
+        </label>
+
+        <input
+          value={fundingBankName}
+          onChange={(e) => setFundingBankName(e.target.value)}
+          required
+          disabled={loadingFund}
+          placeholder="Example: Chase Bank"
+          className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
+        />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Sender Account Name
+        </label>
+
+        <input
+          value={fundingAccountName}
+          onChange={(e) => setFundingAccountName(e.target.value)}
+          required
+          disabled={loadingFund}
+          placeholder="Example: Errandly247 Ltd"
+          className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
+        />
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Sender Account Number
+        </label>
+
+        <input
+          value={fundingAccountNumber}
+          onChange={(e) => setFundingAccountNumber(e.target.value)}
+          required
+          disabled={loadingFund}
+          placeholder="Example: 4821937462"
+          className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
+        />
+      </div>
 
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">

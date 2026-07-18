@@ -9,16 +9,25 @@ type UserOption = {
   email: string | null;
 };
 
-export default function AdminFundUserCard({ users }: { users: UserOption[] }) {
+export default function AdminFundUserCard({
+  users,
+}: {
+  users: UserOption[];
+}) {
   const router = useRouter();
 
   const [targetUserId, setTargetUserId] = useState("");
   const [amount, setAmount] = useState("");
+
+  const [fundingBankName, setFundingBankName] = useState("");
+  const [fundingAccountName, setFundingAccountName] = useState("");
+  const [fundingAccountNumber, setFundingAccountNumber] = useState("");
+
   const [note, setNote] = useState("Admin wallet funding");
+
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [fundingSource, setFundingSource] = useState("");
 
   const handleFundUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,33 +36,50 @@ export default function AdminFundUserCard({ users }: { users: UserOption[] }) {
     setSuccessMsg("");
     setLoading(true);
 
-    const res = await fetch("/api/admin/fund-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        targetUserId,
-        amount: Number(amount),
-        fundingSource,
-        note,
-      }),
-    });
+    try {
+      const res = await fetch("/api/admin/fund-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          targetUserId,
+          amount: Number(amount),
 
-    const data = await res.json();
-    setLoading(false);
+          fundingBankName,
+          fundingAccountName,
+          fundingAccountNumber,
 
-    if (!res.ok) {
-      setErrorMsg(data?.error || "Funding failed.");
-      return;
+          note,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setErrorMsg(data?.error || "Funding failed.");
+        return;
+      }
+
+      setSuccessMsg(
+        data?.emailWarning || "User account funded successfully.",
+      );
+
+      setTargetUserId("");
+      setAmount("");
+
+      setFundingBankName("");
+      setFundingAccountName("");
+      setFundingAccountNumber("");
+
+      setNote("Admin wallet funding");
+
+      router.refresh();
+    } catch {
+      setErrorMsg("Unable to connect to the funding service.");
+    } finally {
+      setLoading(false);
     }
-
-    setSuccessMsg(data?.emailWarning || "User account funded successfully.");
-    setFundingSource("");
-    setTargetUserId("");
-    setAmount("");
-    setNote("Admin wallet funding");
-    router.refresh();
   };
 
   return (
@@ -63,7 +89,7 @@ export default function AdminFundUserCard({ users }: { users: UserOption[] }) {
       </h2>
 
       <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-        Select a registered Synox user and credit their wallet.
+        Select a registered Synox user and credit their account.
       </p>
 
       {errorMsg && (
@@ -83,6 +109,7 @@ export default function AdminFundUserCard({ users }: { users: UserOption[] }) {
           <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Select User
           </label>
+
           <select
             value={targetUserId}
             onChange={(e) => setTargetUserId(e.target.value)}
@@ -91,6 +118,7 @@ export default function AdminFundUserCard({ users }: { users: UserOption[] }) {
             className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
           >
             <option value="">Choose user</option>
+
             {users.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.full_name || "Unnamed User"} - {item.email}
@@ -98,29 +126,63 @@ export default function AdminFundUserCard({ users }: { users: UserOption[] }) {
             ))}
           </select>
         </div>
-         
+
         <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Funding Source
-        </label>
-        <input
+          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Sender Bank Name
+          </label>
+
+          <input
             type="text"
-            value={fundingSource}
-            onChange={(e) => setFundingSource(e.target.value)}
+            value={fundingBankName}
+            onChange={(e) => setFundingBankName(e.target.value)}
             required
             disabled={loading}
-            placeholder="Example: Acme Ltd, John Smith, Synox Payroll"
+            placeholder="Example: Chase Bank"
             className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
-        />
+          />
+        </div>
+
+        <div>
+          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Sender Account Name
+          </label>
+
+          <input
+            type="text"
+            value={fundingAccountName}
+            onChange={(e) => setFundingAccountName(e.target.value)}
+            required
+            disabled={loading}
+            placeholder="Example: Errandly247 Ltd"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
+          />
+        </div>
+
+        <div>
+          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Sender Account Number
+          </label>
+
+          <input
+            type="text"
+            value={fundingAccountNumber}
+            onChange={(e) => setFundingAccountNumber(e.target.value)}
+            required
+            disabled={loading}
+            placeholder="Example: 4821937462"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
+          />
         </div>
 
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Amount USD
           </label>
+
           <input
             type="number"
-            min="1"
+            min="0.01"
             step="0.01"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -133,13 +195,15 @@ export default function AdminFundUserCard({ users }: { users: UserOption[] }) {
 
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Note
+            Description
           </label>
+
           <input
             type="text"
             value={note}
             onChange={(e) => setNote(e.target.value)}
             disabled={loading}
+            placeholder="Example: Incoming business payment"
             className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white"
           />
         </div>

@@ -685,34 +685,32 @@ export async function POST(request: Request) {
           created_at:
             transaction.effective_at,
 
-          metadata: {
-            category:
-              transaction.category,
-            synthetic: true,
-            generator_mode: payload.mode,
-            generator_batch_id: batchId,
-            generated_by:
-              authenticatedUser.id,
-            balance_after:
-              transaction.balance_after,
+         metadata: {
+        category: transaction.category,
+        synthetic: true,
+        generator_mode: payload.mode,
+        generator_batch_id: batchId,
+        generated_by: authenticatedUser.id,
+        balance_after: transaction.balance_after,
 
-            from_bank:
-              transaction.from_bank,
-            from_account_name:
-              transaction.from_account_name,
-            from_account_number:
-              transaction.from_account_number,
+        sender_name: transaction.from_account_name,
+        receiver_name: transaction.to_account_name,
 
-            to_bank:
-              transaction.to_bank,
-            to_account_name:
-              transaction.to_account_name,
-            to_account_number:
-              transaction.to_account_number,
+        sender_account: transaction.from_account_number,
+        receiver_account: transaction.to_account_number,
 
-            preview_transaction_id:
-              transaction.id,
-          },
+        source: transaction.from_bank,
+
+        from_bank: transaction.from_bank,
+        from_account_name: transaction.from_account_name,
+        from_account_number: transaction.from_account_number,
+
+        to_bank: transaction.to_bank,
+        to_account_name: transaction.to_account_name,
+        to_account_number: transaction.to_account_number,
+
+        preview_transaction_id: transaction.id,
+        },
         }),
       );
 

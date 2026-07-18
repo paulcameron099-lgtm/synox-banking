@@ -105,12 +105,27 @@ function getTimelineSteps(status: string) {
   .eq("id", transaction.user_id)
   .single();
 
-   const metadata = transaction.metadata as {
-    sender_account?: string;
-    receiver_account?: string;
+  const metadata = transaction.metadata as {
+    category?: string;
+
+    source?: string;
+
     sender_name?: string;
     receiver_name?: string;
-    source?: string;
+
+    sender_account?: string;
+    receiver_account?: string;
+
+    from_bank?: string;
+    to_bank?: string;
+
+    from_account_name?: string;
+    from_account_number?: string;
+
+    to_account_name?: string;
+    to_account_number?: string;
+
+    balance_after?: number;
     note?: string | null;
   } | null;
 
@@ -121,6 +136,36 @@ function getTimelineSteps(status: string) {
 
     const isCredit = transaction.type === "credit";
     const timelineSteps = getTimelineSteps(transaction.status);
+
+        const fromBank =
+      metadata?.from_bank ||
+      metadata?.source ||
+      "Not available";
+
+    const toBank =
+      metadata?.to_bank ||
+      "Synox Bank";
+
+    const senderAccountName =
+      metadata?.sender_name ||
+      metadata?.from_account_name ||
+      "Not available";
+
+    const receiverAccountName =
+      metadata?.receiver_name ||
+      metadata?.to_account_name ||
+      transactionOwner?.full_name ||
+      "Your Synox Account";
+
+    const senderAccountNumber =
+      metadata?.sender_account ||
+      metadata?.from_account_number ||
+      "Not available";
+
+    const receiverAccountNumber =
+      metadata?.receiver_account ||
+      metadata?.to_account_number ||
+      "Not available";
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -236,33 +281,65 @@ function getTimelineSteps(status: string) {
         )}
 
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
-            <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">From</p>
-                <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-                    {fromName}
-                </p>
-                </div>
+        <div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            From Bank
+          </p>
 
-                <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">To</p>
-                <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-                    {toName}
-                </p>
-                </div>
+          <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
+            {fromBank}
+          </p>
+        </div>
 
-                <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Sender Account</p>
-                <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-                    {senderAccount}
-                </p>
-                </div>
+        <div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            To Bank
+          </p>
 
-                <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Receiver Account</p>
-                <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-                    {receiverAccount}
-                </p>
-                </div>
+          <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
+            {toBank}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Sender Account Name
+          </p>
+
+          <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
+            {senderAccountName}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Receiver Account Name
+          </p>
+
+          <p className="mt-1 text-sm font-medium text-gray-900 dark:text-white">
+            {receiverAccountName}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Sender Account Number
+          </p>
+
+          <p className="mt-1 break-all text-sm font-medium text-gray-900 dark:text-white">
+            {senderAccountNumber}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Receiver Account Number
+          </p>
+
+          <p className="mt-1 break-all text-sm font-medium text-gray-900 dark:text-white">
+            {receiverAccountNumber}
+          </p>
+        </div>
           <div>
             <p className="text-xs text-gray-500 dark:text-gray-400">Type</p>
             <p className="mt-1 text-sm font-medium capitalize text-gray-900 dark:text-white">
